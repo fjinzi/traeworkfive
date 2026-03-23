@@ -286,8 +286,8 @@ const openEditDialog = (product: SeckillProduct) => {
     originalPrice: product.originalPrice || undefined,
     description: product.description || '',
     imageUrl: product.imageUrl || '',
-    startTime: product.startTime ? product.startTime.replace('T', ' ').slice(0, 16) : '',
-    endTime: product.endTime ? product.endTime.replace('T', ' ').slice(0, 16) : '',
+    startTime: product.startTime ? product.startTime.slice(0, 16) : '',
+    endTime: product.endTime ? product.endTime.slice(0, 16) : '',
     status: product.status
   })
   showDialog.value = true
@@ -309,8 +309,8 @@ const handleSubmit = async () => {
         originalPrice: formData.originalPrice,
         description: formData.description,
         imageUrl: formData.imageUrl,
-        startTime: formData.startTime + ':00',
-        endTime: formData.endTime + ':00',
+        startTime: formData.startTime.replace('T', ' ') + ':00',
+        endTime: formData.endTime.replace('T', ' ') + ':00',
         status: formData.status
       }
       result = await productAdminApi.updateProduct(updateData)
@@ -322,8 +322,8 @@ const handleSubmit = async () => {
         originalPrice: formData.originalPrice,
         description: formData.description,
         imageUrl: formData.imageUrl,
-        startTime: formData.startTime + ':00',
-        endTime: formData.endTime + ':00'
+        startTime: formData.startTime.replace('T', ' ') + ':00',
+        endTime: formData.endTime.replace('T', ' ') + ':00'
       }
       result = await productAdminApi.createProduct(createData)
     }
