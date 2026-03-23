@@ -276,6 +276,17 @@ const openCreateDialog = () => {
   showDialog.value = true
 }
 
+const formatDateTimeForInput = (dateStr: string) => {
+  if (!dateStr) return ''
+  const date = new Date(dateStr)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+  return `${year}-${month}-${day}T${hours}:${minutes}`
+}
+
 const openEditDialog = (product: SeckillProduct) => {
   isEdit.value = true
   Object.assign(formData, {
@@ -286,8 +297,8 @@ const openEditDialog = (product: SeckillProduct) => {
     originalPrice: product.originalPrice || undefined,
     description: product.description || '',
     imageUrl: product.imageUrl || '',
-    startTime: product.startTime ? product.startTime.replace('T', ' ').slice(0, 16) : '',
-    endTime: product.endTime ? product.endTime.replace('T', ' ').slice(0, 16) : '',
+    startTime: formatDateTimeForInput(product.startTime),
+    endTime: formatDateTimeForInput(product.endTime),
     status: product.status
   })
   showDialog.value = true
@@ -295,6 +306,17 @@ const openEditDialog = (product: SeckillProduct) => {
 
 const closeDialog = () => {
   showDialog.value = false
+}
+
+const formatDateTimeForSubmit = (dateStr: string) => {
+  if (!dateStr) return ''
+  const date = new Date(dateStr)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+  return `${year}-${month}-${day} ${hours}:${minutes}:00`
 }
 
 const handleSubmit = async () => {
@@ -309,8 +331,8 @@ const handleSubmit = async () => {
         originalPrice: formData.originalPrice,
         description: formData.description,
         imageUrl: formData.imageUrl,
-        startTime: formData.startTime + ':00',
-        endTime: formData.endTime + ':00',
+        startTime: formatDateTimeForSubmit(formData.startTime),
+        endTime: formatDateTimeForSubmit(formData.endTime),
         status: formData.status
       }
       result = await productAdminApi.updateProduct(updateData)
@@ -322,8 +344,8 @@ const handleSubmit = async () => {
         originalPrice: formData.originalPrice,
         description: formData.description,
         imageUrl: formData.imageUrl,
-        startTime: formData.startTime + ':00',
-        endTime: formData.endTime + ':00'
+        startTime: formatDateTimeForSubmit(formData.startTime),
+        endTime: formatDateTimeForSubmit(formData.endTime)
       }
       result = await productAdminApi.createProduct(createData)
     }
