@@ -276,6 +276,12 @@ const openCreateDialog = () => {
   showDialog.value = true
 }
 
+const formatDateTimeForInput = (dateStr: string) => {
+  if (!dateStr) return ''
+  const normalized = dateStr.replace(' ', 'T')
+  return normalized.slice(0, 16)
+}
+
 const openEditDialog = (product: SeckillProduct) => {
   isEdit.value = true
   Object.assign(formData, {
@@ -286,8 +292,8 @@ const openEditDialog = (product: SeckillProduct) => {
     originalPrice: product.originalPrice || undefined,
     description: product.description || '',
     imageUrl: product.imageUrl || '',
-    startTime: product.startTime ? product.startTime.replace('T', ' ').slice(0, 16) : '',
-    endTime: product.endTime ? product.endTime.replace('T', ' ').slice(0, 16) : '',
+    startTime: formatDateTimeForInput(product.startTime),
+    endTime: formatDateTimeForInput(product.endTime),
     status: product.status
   })
   showDialog.value = true
