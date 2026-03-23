@@ -1,0 +1,10 @@
+# Redis初始化命令
+# 执行方式：redis-cli < init_redis.txt
+
+# 设置商品信息
+SET seckill:product:1 '{"id":1,"name":"iPhone 15 Pro","price":5999,"stock":1000}'
+
+# 设置商品库存
+SET seckill:stock:1 1000
+
+

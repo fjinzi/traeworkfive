@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: seckill-system
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
+  # rocketmq:
+  #   name-server: 192.168.124.132:9876
+  #   producer:
+  #     group: seckill-producer-group
+
+
+  data:
+    redis:
+      host: 192.168.124.132
+      port: 6379
+      database: 0
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.seckill.entity
+
+server:
+  port: 8080
+
+jwt:
+  secret: seckill-system-jwt-secret-key-must-be-at-least-256-bits-long-for-security
+  expiration: 86400000
+
+logging:
+  level:
+    com.seckill: DEBUG
+    com.seckill.service: DEBUG
+    com.seckill.controller: DEBUG

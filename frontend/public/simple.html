@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>简单测试</title>
+</head>
+<body>
+    <h1>如果能看到这个页面，说明前端正常</h1>
+    <p>测试 API 连接...</p>
+    <div id="api-result"></div>
+    <script>
+        fetch('/api/seckill/products')
+            .then(response => {
+                if (!response.ok) throw new Error('网络响应失败');
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('api-result').innerHTML = 
+                    '<pre style="background: #f0f0f0; padding: 10px;">' + 
+                    JSON.stringify(data, null, 2) + 
+                    '</pre>';
+            })
+            .catch(error => {
+                document.getElementById('api-result').innerHTML = 
+                    '<p style="color: red;">API 调用失败：' + error.message + '</p>';
+            });
+    </script>
+</body>
+</html>
